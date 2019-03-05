@@ -68,7 +68,7 @@ Elem list::get(int pos, const List& l)        /* restituisce l'elemento in posiz
 {
 	node* found=l;
     for(int i=0;i<pos;++i){
-		 found=found->next;
+		found=found->next;
 	}
 	if(found->info!=NULL) return found->info;
     return 0;                    
@@ -82,8 +82,17 @@ void list::set(int pos, Elem e, const List& l)        /* modifica l'elemento in 
 
 
 void list::add(int pos, Elem e, const List& l)        /* inserisce l'elemento in posizione pos, shiftando a destra gli altri elementi */
-{                                               
-  
+{  
+  node* tmp=l;	
+  for(int i=0;i<pos;++i){
+  	tmp=tmp->next;
+  }
+  node* aux=new node;
+	aux->info=e;
+	aux->next=tmp;
+	aux->prev=tmp->prev;
+	tmp->prev=aux;
+	tmp->prev->next=aux;
 }
 
 
@@ -118,7 +127,15 @@ void list::removePos(int pos, const List& l)      /* cancella l'elemento in posi
 
 void list::removeEl(Elem e, const List& l)        /* cancella tutte le occorrenze dell'elemento elem, se presenti, dalla lista */
 {
-
+	node* aux=l->next;
+	while(aux!=l){
+		node* tmp=aux;
+		if(aux->info==e){
+			aux=aux->next;
+			aux->prev=tmp->prev;
+			tmp->prev->next=aux;
+			delete tmp;
+		}					
 }
 
 
@@ -129,8 +146,15 @@ bool list::isEmpty(const List& l)         /* restituisce true se la lista e' vuo
 
 
 int list::size(const List& l)           /* restituisce la dimensione della lista */
-{
-   return 0;   
+{	
+  	int count=0;
+	node* tmp=l->next;
+	while(tmp!=l){
+		count++;
+		tmp=tmp->next;
+	}
+
+   return count;   
 }
 
 
