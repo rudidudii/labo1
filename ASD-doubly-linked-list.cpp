@@ -12,7 +12,7 @@ node *next;
 };
 
 /*************************************************/
-/* Implementazione delle operazioni di utilita'  */
+/* Implementazione delle operazioni di utilita'Â  */
 /*************************************************/
 
 void readFromStream(istream& str, List& l)
@@ -66,6 +66,11 @@ void list::clear(const List& l)                 /* "smantella" la lista svuotand
 
 Elem list::get(int pos, const List& l)        /* restituisce l'elemento in posizione pos se presente; restituisce un elemento che per convenzione si decide che rappresenta l'elemento vuoto altrimenti*/
 {
+	node* found=l;
+    for(int i=0;i<pos;++i){
+		 found=found->next;
+	}
+	if(found->info!=NULL) return found->info;
     return 0;                    
 }
 
